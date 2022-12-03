@@ -1,0 +1,24 @@
+{
+  "name": "@pjsr/mathjs-lang",
+  "version": "1.0.0",
+  "description": "Small programming language for 'mathjs' library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pjsr1980/mathjs-lang.git"
+  },
+  "keywords": [
+    "math",
+    "mathjs",
+    "compiler"
+  ],
+  "author": "Pedro Ribeiro (pjsr1980@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pjsr1980/mathjs-lang/issues"
+  },
+  "homepage": "https://github.com/pjsr1980/mathjs-lang#readme"
+}
