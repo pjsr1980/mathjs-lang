@@ -2,8 +2,9 @@
   "name": "@pjsr/mathjs-lang",
   "version": "1.0.0",
   "description": "Small programming language for 'mathjs' library",
-  "module": "/dist/factory.js",
   "type": "module",
+  "main": "./dist/factory.js",
+  "module": "./dist/factory.js",
   "scripts": {
     "parser": "node ./src/parser/make.js"
   },
