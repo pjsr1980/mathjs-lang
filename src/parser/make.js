@@ -3,12 +3,14 @@ import * as fs from 'fs';
 import { exec } from 'child_process';
 import { cwd, chdir } from 'process';
 
-let base = "src/";
-let files = "parser.jison parser.jisonlex"
-let path = "jison " + files;
+let base = "src/parser/";
+let files = " parser.jison parser.jisonlex";
+let options = " -o ../parser.js -m commonjs"
+let path = "jison" + files + options;
 
 let text = `
 
+// export 'parse' function
 export const parse = function () {
 	return parser.parse.apply(parser, arguments);
 };
@@ -17,14 +19,13 @@ export const parse = function () {
 try {
 	chdir(base);
 	exec(path, function(error, stdout, stderr) {
-		if(error) {
-			console.log("Error", error);
+		if(error) { 
+			throw error; 
 		}
 		else {
-			fs.appendFile('parser.js', text, (err) => {
+			fs.appendFile('../parser.js', text, (err) => {
 				if (err) { throw err; }
-				console.log("Parser build");
-			})
+			});
 		}
     });
 }
