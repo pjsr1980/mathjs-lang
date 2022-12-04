@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "Small programming language for 'mathjs' library",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "parser": "node ./src/parser/make.js"
+  },
+  "dependencies": {
+    "mathjs": "^11.4.0"
   },
   "repository": {
     "type": "git",
@@ -21,4 +25,5 @@
     "url": "https://github.com/pjsr1980/mathjs-lang/issues"
   },
   "homepage": "https://github.com/pjsr1980/mathjs-lang#readme"
+  
 }
