@@ -1,11 +1,11 @@
-
 //=========================================================
-import { create, all } from 'mathjs';
-import { AdvancedMapScope } from './scope';
-import { build, compile } from './c3e';
+import { Scope } from './scope';
 import { parse } from './parser';
+import { build } from "./build";
+import { compile } from "./compile";
+import { create, all } from 'mathjs';
 
-const config = { 
+const config: math.ConfigOptions = { 
     epsilon: 1e-12,
     matrix: 'Array',
     number: 'number',
@@ -17,16 +17,21 @@ const config = {
 //=========================================================
 export class Factory
 {
+    protected _math: math.MathJsStatic;
+    protected _scope: Scope;
+    protected _scopes: Scope[];
+
     constructor() {
         this._math = create(all, config);
-
-        this._scope = new AdvancedMapScope();
+        this._scope = new Scope();
         this._scopes = [];
     }
 
-    get math() { return this._math; }
+    get math() { 
+        return this._math; 
+    }
 
-    get scope() {
+    get scope() : Scope {
         if(this._scopes.length > 0) {
             return this._scopes[this._scopes.length-1];
         } else {
@@ -34,8 +39,12 @@ export class Factory
         }
     }
 
+    get stackLength() {
+        return this._scopes.length;
+    }
+
     pushScope() {
-        this._scopes.push(new AdvancedMapScope(this.scope));
+        this._scopes.push(new Scope(this.scope));
     }
 
     popScope() {
@@ -46,46 +55,31 @@ export class Factory
         return false;
     }
 
-    assign(path, value) {
-        let key = "$0$";
+    assign(path: string, value: any) {
+        const key = "$TMP$";
         let scope = this.scope;
         scope.setLocal(key, value);
         this.evaluate(path + ' = ' + key);
         scope.delete(key);
     }
 
-    evaluate(expr) {
+    evaluate(expr: string) {
         return this._math.evaluate(expr, this.scope);
     }
 
-    parse(text) {
+    parse(text: string) : any[] {
         return parse(text);
     }
 
-    build(stmts) {
-        if(stmts instanceof Array) {
-            return build(stmts);
-        }
-        else if(typeof stmts === "string") {
-            return build(parse(stmts));
-        }
+    build(stmts: any[]) {
+        return build(stmts);
     }
 
-    compile(code) {
+    compile(code: any[]) {
         return compile(this, code);
     }
 
-    run(stmts) {
-        let scope = this._scopes.length;
-        let code = this.build(stmts);
-        let prgm = this.compile(code);
-        prgm();
-        while(this._scopes.length > scope) {
-            this.popScope();
-        }
-    }
-
-    print(value) {
+    print(value: any) {
         const precision = 14;
         return this._math.format(value, precision);
     }

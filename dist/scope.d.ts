@@ -8,7 +8,7 @@ declare class MapScope {
 }
 export declare class Scope extends MapScope {
     protected _parent?: Scope;
-    constructor(parent: Scope);
+    constructor(parent?: Scope);
     get(key: string): any;
     has(key: string): boolean;
     setLocal(key: string, value: any): Map<string, any>;

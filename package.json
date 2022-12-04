@@ -2,7 +2,7 @@
   "name": "@pjsr/mathjs-lang",
   "version": "1.0.0",
   "description": "Small programming language for 'mathjs' library",
-  "main": "index.js",
+  "module": "/dist/factory.js",
   "type": "module",
   "scripts": {
     "parser": "node ./src/parser/make.js"
@@ -25,5 +25,4 @@
     "url": "https://github.com/pjsr1980/mathjs-lang/issues"
   },
   "homepage": "https://github.com/pjsr1980/mathjs-lang#readme"
-  
 }

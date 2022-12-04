@@ -19,7 +19,7 @@ export class Scope extends MapScope
 {
 	protected _parent?: Scope;
 
-	constructor (parent: Scope) {
+	constructor (parent?: Scope) {
 		super();
 		this._parent = parent;
 	}
