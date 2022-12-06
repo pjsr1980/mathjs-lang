@@ -1,4 +1,4 @@
-import { Scope } from './scope';
+import { Scope } from './scope.js';
 export declare class Factory {
     protected _math: math.MathJsStatic;
     protected _scope: Scope;
