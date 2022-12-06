@@ -1,5 +1,5 @@
 
-/* language declarations */
+/* javascript language declarations */
 %{
 
 %}
@@ -7,7 +7,7 @@
 /* jison declarations */
 
 /* operator associations and precedence */
-%left ';'
+%left SEMICOLON
 %left ','
 %right '='
 %right '?' ':'
@@ -38,14 +38,17 @@
 //---------------------------------------------------------
 prgm
     : eof                   {return [];}
+    | prgm SEMICOLON        {$$ = $1;}
     | prgm stmt             {$$ = $1.concat([$2]);}
+    | SEMICOLON             {$$ = [];}
     | stmt                  {$$ = [$1];}
     | prgm eof              {return $1;}
     ;
 
 //---------------------------------------------------------
 stmt
-    : stmt_if               {$$ = $1;}
+    : stmt                  {$$ = $1;}
+    | stmt_if               {$$ = $1;}
     | stmt_do               {$$ = $1;}
     | stmt_for              {$$ = $1;}
     | stmt_break            {$$ = $1;}
@@ -65,7 +68,9 @@ stmt_body
 
 stmt_array
     : stmt_array stmt       {$$ = $1.concat([$2]);}
+    | stmt_array SEMICOLON  {$$ = $1;}
     | stmt                  {$$ = [$1];}
+    | SEMICOLON             {$$ = [];}
     ;
 
 stmt_list
@@ -98,13 +103,13 @@ stmt_while
     ;
 
 stmt_break
-    : BREAK ';'             {$$ = ['break']}
+    : BREAK SEMICOLON       {$$ = ['break']}
     ;
 
 stmt_return
-    : RETURN ';'            {$$ = ['return', null]}
-    | RETURN func ';'       {$$ = ['return', $2]}
-    | RETURN e ';'          {$$ = ['return', $2]}
+    : RETURN SEMICOLON      {$$ = ['return', null]}
+    | RETURN func SEMICOLON {$$ = ['return', $2]}
+    | RETURN e SEMICOLON    {$$ = ['return', $2]}
     ;
 
 //---------------------------------------------------------
@@ -140,14 +145,14 @@ stmt_for
     ;
 
 stmt_for_args
-    : '(' ';' ';' ')'                               {$$ = [null, null, null];}
-    | '(' stmt_for_init ';' ';' ')'                 {$$ = [$2, null, null]}
-    | '(' ';' e ';' ')'                             {$$ = [null, $3, null]}
-    | '(' ';' ';' stmt_list ')'                     {$$ = [null, null, $4]}
-    | '(' ';' e ';' stmt_list ')'                   {$$ = [null, $3, $5]}
-    | '(' stmt_for_init ';' e ';' ')'               {$$ = [$2, $4, null]}
-    | '(' stmt_for_init ';' ';' stmt_list ')'       {$$ = [$2, null, $5]}
-    | '(' stmt_for_init ';' e ';' stmt_list ')'     {$$ = [$2, $4, $6]}
+    : '(' SEMICOLON SEMICOLON ')'                   {$$ = [null, null, null];}
+    | '(' stmt_for_init SEMICOLON SEMICOLON ')'     {$$ = [$2, null, null]}
+    | '(' SEMICOLON e SEMICOLON ')'                 {$$ = [null, $3, null]}
+    | '(' SEMICOLON SEMICOLON stmt_list ')'         {$$ = [null, null, $4]}
+    | '(' SEMICOLON e SEMICOLON stmt_list ')'       {$$ = [null, $3, $5]}
+    | '(' stmt_for_init SEMICOLON e SEMICOLON ')'   {$$ = [$2, $4, null]}
+    | '(' stmt_for_init SEMICOLON SEMICOLON stmt_list ')' {$$ = [$2, null, $5]}
+    | '(' stmt_for_init SEMICOLON e SEMICOLON stmt_list ')' {$$ = [$2, $4, $6]}
     ;
 
 stmt_for_init
@@ -181,13 +186,13 @@ stmt_decl_list
     : stmt_decl_list ',' stmt_decl_item
         { $$ = $1.concat([$3]); }
     | stmt_decl_item 
-        {$$ = [$1];}
+        { $$ = [$1]; }
     ;
 
 stmt_decl_item
-    : name '=' func         {$$ = [$1, $3]}
-    | name '=' e            {$$ = [$1, $3]}
-    | name                  {$$ = [$1]}
+    : name '=' func         { $$ = [$1, $3]; }
+    | name '=' e            { $$ = [$1, $3]; }
+    | name                  { $$ = [$1]; }
     ;
 
 //---------------------------------------------------------
@@ -260,12 +265,6 @@ e
     | NUMBER                {$$ = yytext;}
     | TRUE                  {$$ = 'true';}
     | FALSE                 {$$ = 'false';}
-/*
-    | E
-        {$$ = Math.E;}
-    | PI
-        {$$ = Math.PI;}
-*/
     | string                {$$ = $1;}
     | name                  {$$ = $1;}
     ;
@@ -316,7 +315,7 @@ matrix
     ;
 
 matrixRows
-    : matrixRows ';' exprList
+    : matrixRows SEMICOLON exprList
         {$$ = $1 + '; ' + $3}
     | exprList
         {$$ = $1}

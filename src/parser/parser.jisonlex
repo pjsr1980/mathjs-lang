@@ -20,14 +20,17 @@ sstr ['][^']*[']
 {ln_cmt}        /* IGNORE: line comment */
 {ml_cmt}        /* IGNORE: multi-line comment */
 
+"`"             return '`'
+"\\"            return 'BACKSLASH'
 "("             return '('
 ")"             return ')'
 "["             return '['
 "]"             return ']'
+"${"            return '${'
 "{"             return '{'
 "}"             return '}'
 ","             return ','
-";"             return ';'
+";"             return 'SEMICOLON'
 
 "'"             return 'TRANSPOSE'
 "+"             return '+'
@@ -72,7 +75,7 @@ sstr ['][^']*[']
 "do"            return 'DO'
 "if"            return 'IF'
 "for"           return 'FOR'
-"func"          return 'FUNC'
+"function"      return 'FUNC'
 "else"          return 'ELSE'
 "case"          return 'CASE'
 "while"         return 'WHILE'

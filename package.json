@@ -1,6 +1,6 @@
 {
   "name": "@pjsr/mathjs-lang",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Small programming language for 'mathjs' library",
   "type": "module",
   "scripts": {

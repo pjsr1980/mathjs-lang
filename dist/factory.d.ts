@@ -13,6 +13,6 @@ export declare class Factory {
     evaluate(expr: string): any;
     parse(text: string): any[];
     build(stmts: any[]): any[];
-    compile(code: any[]): (() => any) | undefined;
+    compile(code: any[]): () => any;
     print(value: any): string;
 }

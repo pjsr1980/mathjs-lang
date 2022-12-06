@@ -1,9 +1,9 @@
 //=========================================================
+import { SType, DType } from "./build.js";
 import { Factory } from "./factory.js";
-import { SType, DType } from "./build";
 
 //=========================================================
-export function compile(factory: Factory, code: any[], args_array?: any[])
+export function compile(factory: Factory, code: any[], args_array?: any[]) : () => any
 {
     if(factory instanceof Factory && code instanceof Array && code.length > 0)
     {
@@ -179,6 +179,8 @@ export function compile(factory: Factory, code: any[], args_array?: any[])
         };
         return func;
     }
+
+    throw new Error("compile: Bad arguments!");
 }
 
 //=========================================================
