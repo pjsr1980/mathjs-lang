@@ -1,10 +1,8 @@
 {
   "name": "@pjsr/mathjs-lang",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Small programming language for 'mathjs' library",
   "type": "module",
-  "main": "./dist/factory.js",
-  "module": "./dist/factory.js",
   "scripts": {
     "parser": "node ./src/parser/make.js"
   },
@@ -18,6 +16,7 @@
   "keywords": [
     "math",
     "mathjs",
+    "parser",
     "compiler"
   ],
   "author": "Pedro Ribeiro (pjsr1980@gmail.com)",
@@ -25,5 +24,13 @@
   "bugs": {
     "url": "https://github.com/pjsr1980/mathjs-lang/issues"
   },
-  "homepage": "https://github.com/pjsr1980/mathjs-lang#readme"
+  "homepage": "https://github.com/pjsr1980/mathjs-lang#readme",
+  "exports": {
+    "./dist/scope.js": "./dist/scope.js",
+    "./dist/build.js": "./dist/build.js",
+    "./dist/parser.js": "./dist/parser.js",
+    "./dist/compile.js": "./dist/compile.js",
+    "./dist/factory.js": "./dist/factory.js"
+  },
+  "main": "./dist/factory.js"
 }
