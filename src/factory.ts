@@ -1,9 +1,9 @@
 //=========================================================
-import { Scope } from './scope';
-import { parse } from './parser';
-import { build } from "./build";
-import { compile } from "./compile";
 import { create, all } from 'mathjs';
+import { Scope } from './scope.js';
+import { parse } from './parser.js';
+import { build } from "./build.js";
+import { compile } from "./compile.js";
 
 const config: math.ConfigOptions = { 
     epsilon: 1e-12,

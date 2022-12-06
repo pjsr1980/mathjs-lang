@@ -30,7 +30,8 @@
     "./dist/build.js": "./dist/build.js",
     "./dist/parser.js": "./dist/parser.js",
     "./dist/compile.js": "./dist/compile.js",
-    "./dist/factory.js": "./dist/factory.js"
+    "./dist/factory.js": "./dist/factory.js",
+    ".": "./dist/factory.js"
   },
-  "main": "./dist/factory.js"
+  "module": "./dist/factory.js"
 }

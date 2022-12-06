@@ -2,6 +2,7 @@
 node_modules
 package-lock.json
 tsconfig.json
+docs/c3e.dio
 .env
 .env.*
 src

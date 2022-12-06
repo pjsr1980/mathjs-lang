@@ -1,5 +1,5 @@
 //=========================================================
-import { Factory } from "./factory";
+import { Factory } from "./factory.js";
 import { SType, DType } from "./build";
 
 //=========================================================
