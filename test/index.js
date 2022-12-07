@@ -12,9 +12,13 @@ const code = `
 let aux = { idade: 21 }
 
 let t1 = function() {
-return \` 
+return \`
     A minha idade é \${ aux.idade }, sou novo!
     Se fosse \${ aux.idade * 2 }, já era mais velho!
+    Um numero com entrada hex \${ 0xFF }
+    Um numero com entrada oct \${ 0o27 }
+    Um numero com entrada bin \${ 0b10000 }
+
 \`;
 }
 

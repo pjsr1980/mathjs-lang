@@ -7,6 +7,9 @@ digit [0-9]
 integer {digit}+
 exponent [eE][+-]?{integer}
 real {integer}("."{integer})?{exponent}?
+hex [0][x][0-9a-fA-F]+
+oct [0][o][0-7]+
+bin [0][b][0-1]+
 
 cname [a-zA-Z_]
 name {cname}({cname}|{digit})*
@@ -84,6 +87,9 @@ lstr [`]("\\\\"|"\\`"|[^`\\])*[`]
 "return"        return 'RETURN'
 "default"       return 'DEFAULT'
 
+{hex}           return 'HEX'
+{oct}           return 'OCT'
+{bin}           return 'BIN'
 {real}          return 'NUMBER'
 {name}          return 'NAME'
 {qstr}          return 'QSTR'

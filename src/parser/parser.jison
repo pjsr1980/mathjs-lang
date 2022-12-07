@@ -4,7 +4,9 @@
     function lstrDump(lstr) {
         let res = [];
         let pos = 0, idx;
-        lstr = lstr.substring(1, lstr.length-1).replaceAll("\\`", "`").replaceAll("\\\\", "\\");
+        lstr = lstr.substring(1, lstr.length-1);
+        if(lstr[0] === "\n") { lstr = lstr.substring(1); }
+        lstr = lstr.replaceAll("\\`", "`").replaceAll("\\\\", "\\");
         while((idx = lstr.indexOf("${", pos)) >= 0) {
             if(idx > pos) {
                 res.push(["str", lstr.substring(pos, idx)]);
@@ -288,6 +290,9 @@ e
     | matrix                {$$ = $1;}
     | '(' e ')'             {$$ = '(' + $2 + ')';}
 
+    | HEX                   {$$ = yytext;}
+    | OCT                   {$$ = yytext;}
+    | BIN                   {$$ = yytext;}
     | NUMBER                {$$ = yytext;}
     | TRUE                  {$$ = 'true';}
     | FALSE                 {$$ = 'false';}
