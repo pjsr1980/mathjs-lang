@@ -14,9 +14,10 @@ export declare enum DType {
     LIT = 1,
     VAR = 2,
     STR = 3,
-    EXPR = 4,
-    TEMP = 5,
-    FUNC = 6,
-    LABEL = 7
+    LSTR = 4,
+    EXPR = 5,
+    TEMP = 6,
+    FUNC = 7,
+    LABEL = 8
 }
 export declare function build(stmts: any[]): any[];

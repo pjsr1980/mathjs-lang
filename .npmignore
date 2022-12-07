@@ -3,6 +3,7 @@ node_modules
 package-lock.json
 tsconfig.json
 docs/c3e.dio
+test
 .env
 .env.*
 src

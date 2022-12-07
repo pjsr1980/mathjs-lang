@@ -49,6 +49,18 @@ export function compile(factory, code, args_array) {
                             else if (code[pos][A1][TP] === DType.FUNC) {
                                 r = compile(factory, code[pos][A1][EL][1], code[pos][A1][EL][0]);
                             }
+                            else if (code[pos][A1][TP] === DType.LSTR) {
+                                r = "";
+                                code[pos][A1][EL].forEach((d) => {
+                                    if (d[TP] === DType.STR) {
+                                        r += d[EL];
+                                    }
+                                    else if (d[TP] === DType.EXPR) {
+                                        let tmp = factory.evaluate(d[EL]);
+                                        r += (typeof tmp === "string" ? tmp : factory.math.format(tmp));
+                                    }
+                                });
+                            }
                             else if (code[pos][A1][TP] === DType.LIT) {
                                 r = code[pos][A1][EL];
                             }
@@ -76,6 +88,18 @@ export function compile(factory, code, args_array) {
                             }
                             else if (code[pos][A2][TP] === DType.FUNC) {
                                 v = compile(factory, code[pos][A2][EL][1], code[pos][A2][EL][0]);
+                            }
+                            else if (code[pos][A2][TP] === DType.LSTR) {
+                                v = "";
+                                code[pos][A2][EL].forEach((d) => {
+                                    if (d[TP] === DType.STR) {
+                                        v += d[EL];
+                                    }
+                                    else if (d[TP] === DType.EXPR) {
+                                        let tmp = factory.evaluate(d[EL]);
+                                        v += (typeof tmp === "string" ? tmp : factory.math.format(tmp));
+                                    }
+                                });
                             }
                             else if (code[pos][A2][TP] === DType.LIT) {
                                 v = code[pos][A2][EL];

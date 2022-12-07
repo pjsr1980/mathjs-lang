@@ -4,7 +4,8 @@
   "description": "Small programming language for 'mathjs' library",
   "type": "module",
   "scripts": {
-    "parser": "node ./src/parser/make.js"
+    "parser": "node ./src/parser/make.js && tsc",
+    "test": "node ./test/index.js"
   },
   "dependencies": {
     "mathjs": "^11.4.0"

@@ -1,7 +1,30 @@
 
 /* javascript language declarations */
 %{
-
+    function lstrDump(lstr) {
+        let res = [];
+        let pos = 0, idx;
+        lstr = lstr.substring(1, lstr.length-1).replaceAll("\\`", "`").replaceAll("\\\\", "\\");
+        while((idx = lstr.indexOf("${", pos)) >= 0) {
+            if(idx > pos) {
+                res.push(["str", lstr.substring(pos, idx)]);
+            }
+            pos = idx + 2;
+            idx = lstr.indexOf("}", pos);
+            if(idx < 0) {
+                throw new Error(lstr);
+            }
+            let expr = lstr.substring(pos, idx).trim();
+            if(expr.length > 0) {
+                res.push(["expr", expr]);
+            }
+            pos = idx + 1;
+        }
+        if(pos < lstr.length) {
+            res.push(["str", lstr.substring(pos, lstr.length)]);
+        }
+        return res;
+    }
 %}
 
 /* jison declarations */
@@ -108,6 +131,7 @@ stmt_break
 
 stmt_return
     : RETURN SEMICOLON      {$$ = ['return', null]}
+    | RETURN lstr SEMICOLON {$$ = ['return', $2]}
     | RETURN func SEMICOLON {$$ = ['return', $2]}
     | RETURN e SEMICOLON    {$$ = ['return', $2]}
     ;
@@ -173,7 +197,8 @@ stmt_asgn_list
     ;
 
 stmt_asgn_item
-    : e '=' func            { $$ = [$1, $3]; }
+    : e '=' lstr            { $$ = [$1, $3]; } 
+    | e '=' func            { $$ = [$1, $3]; }
     | e '=' e               { $$ = [$1, $3]; }
     ;
 
@@ -190,7 +215,8 @@ stmt_decl_list
     ;
 
 stmt_decl_item
-    : name '=' func         { $$ = [$1, $3]; }
+    : name '=' lstr         { $$ = [$1, $3]; }
+    | name '=' func         { $$ = [$1, $3]; }
     | name '=' e            { $$ = [$1, $3]; }
     | name                  { $$ = [$1]; }
     ;
@@ -276,6 +302,10 @@ name
 string 
     : QSTR                  {$$ = yytext;}
     | SSTR                  {$$ = yytext;}
+    ;
+
+lstr
+    : LSTR                  {$$ = ['lstr', lstrDump(yytext)];}
     ;
 
 funcCall

@@ -17,10 +17,11 @@ export var DType;
     DType[DType["LIT"] = 1] = "LIT";
     DType[DType["VAR"] = 2] = "VAR";
     DType[DType["STR"] = 3] = "STR";
-    DType[DType["EXPR"] = 4] = "EXPR";
-    DType[DType["TEMP"] = 5] = "TEMP";
-    DType[DType["FUNC"] = 6] = "FUNC";
-    DType[DType["LABEL"] = 7] = "LABEL";
+    DType[DType["LSTR"] = 4] = "LSTR";
+    DType[DType["EXPR"] = 5] = "EXPR";
+    DType[DType["TEMP"] = 6] = "TEMP";
+    DType[DType["FUNC"] = 7] = "FUNC";
+    DType[DType["LABEL"] = 8] = "LABEL";
 })(DType || (DType = {}));
 //=========================================================
 class Builder {
@@ -50,6 +51,18 @@ class Builder {
     }
     data_str(v) {
         return { type: DType.STR, elem: v };
+    }
+    data_lstr(v) {
+        let elem = [];
+        v.forEach((val, idx) => {
+            if (val[0] === "str") {
+                elem.push([DType.STR, val[1]]);
+            }
+            else if (val[0] === "expr") {
+                elem.push([DType.EXPR, val[1]]);
+            }
+        });
+        return { type: DType.LSTR, elem: elem };
     }
     data_func(v) {
         return { type: DType.FUNC, elem: v };
@@ -104,6 +117,9 @@ class Builder {
                 if (data[0] === "func") {
                     s = this.gen_stat(SType.RUN, this.gen_func(data[1], data[2]), null);
                 }
+                else if (data[0] === "lstr") {
+                    s = this.gen_stat(SType.RUN, this.data_lstr(data[1]), null);
+                }
             }
             if (s) {
                 s.target = this.data_ret();
@@ -129,6 +145,13 @@ class Builder {
                 this.gen_stat(SType.COPY, tmp, null).target = this.data_var(name);
                 this.gen_stat(SType.DEL, null, null).target = tmp;
             }
+            else if (data[0] === "lstr") {
+                let tmp = this.data_tmp();
+                let s = this.gen_stat(SType.RUN, this.data_lstr(data[1]), null);
+                s.target = tmp;
+                this.gen_stat(SType.COPY, tmp, null).target = this.data_var(name);
+                this.gen_stat(SType.DEL, null, null).target = tmp;
+            }
         }
     }
     gen_declare(name, data) {
@@ -141,6 +164,9 @@ class Builder {
         else if (data instanceof Array) {
             if (data[0] === "func") {
                 this.gen_stat(SType.DECL, this.data_str(name), this.gen_func(data[1], data[2]));
+            }
+            else if (data[0] === "lstr") {
+                this.gen_stat(SType.DECL, this.data_str(name), this.data_lstr(data[1]));
             }
         }
     }

@@ -14,19 +14,19 @@ name {cname}({cname}|{digit})*
 qstr ["][^"]*["]
 sstr ['][^']*[']
 
+lstr [`]("\\\\"|"\\`"|[^`\\])*[`]
+
 %%
 
 \s+             /* IGNORE: spaces */
 {ln_cmt}        /* IGNORE: line comment */
 {ml_cmt}        /* IGNORE: multi-line comment */
 
-"`"             return '`'
 "\\"            return 'BACKSLASH'
 "("             return '('
 ")"             return ')'
 "["             return '['
 "]"             return ']'
-"${"            return '${'
 "{"             return '{'
 "}"             return '}'
 ","             return ','
@@ -88,6 +88,7 @@ sstr ['][^']*[']
 {name}          return 'NAME'
 {qstr}          return 'QSTR'
 {sstr}          return 'SSTR'
+{lstr}          return 'LSTR'
 
 <<EOF>>         return 'EOF'
 .               return 'INVALID'
