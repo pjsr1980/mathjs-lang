@@ -54,10 +54,7 @@ export class Factory {
         return this._math.evaluate(expr, this.scope);
     }
     parse(text) {
-        return parse(text);
-    }
-    build(stmts) {
-        return build(stmts);
+        return build(parse(text));
     }
     compile(code) {
         return compile(this, code);

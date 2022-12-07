@@ -68,11 +68,7 @@ export class Factory
     }
 
     parse(text: string) : any[] {
-        return parse(text);
-    }
-
-    build(stmts: any[]) {
-        return build(stmts);
+        return build(parse(text));
     }
 
     compile(code: any[]) {

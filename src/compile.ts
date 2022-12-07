@@ -29,6 +29,7 @@ export function compile(factory: Factory, code: any[], args_array?: any[]) : () 
             }
 
             while(code[pos][ST] != SType.END) {
+                
                 switch(code[pos][ST]) {
 
                     case SType.DEL:
@@ -43,7 +44,12 @@ export function compile(factory: Factory, code: any[], args_array?: any[]) : () 
                             if(!factory.evaluate(code[pos][A1][EL])) {
                                 pos = code[pos][A3][EL];
                             }
-                            else { pos += 1; }
+                            else { 
+                                pos += 1;
+                            }
+                        }
+                        else { 
+                            throw new Error("Run error!"); 
                         }
                         break;
 
@@ -88,7 +94,6 @@ export function compile(factory: Factory, code: any[], args_array?: any[]) : () 
                         }
                         pos += 1;
                         break;
-
 
                     case SType.DECL:
                         let v : any = null;

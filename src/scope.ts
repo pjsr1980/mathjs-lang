@@ -8,7 +8,7 @@ class MapScope
 	constructor () 					{ this._scope = new Map<string, any>(); }
 	
 	get (key: string) 				{ return this._scope.get(key); }
-	set (key: string, value: any) 	{ this._scope.set(key, value); }
+	set (key: string, value: any) 	{ return this._scope.set(key, value); }
 	has (key: string) 				{ return this._scope.has(key); }
 	keys () : Set<string>			{ return new Set(this._scope.keys()); }
 }
@@ -48,7 +48,7 @@ export class Scope extends MapScope
 		let aux : Scope | undefined = this;
 		while(aux) {
 			if(aux._scope.has(key)) { 
-				aux._scope.set(key, value);
+				return aux._scope.set(key, value);
 			}
 			else { 
 				aux = aux._parent;

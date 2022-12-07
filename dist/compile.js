@@ -39,6 +39,9 @@ export function compile(factory, code, args_array) {
                                 pos += 1;
                             }
                         }
+                        else {
+                            throw new Error("Run error!");
+                        }
                         break;
                     case SType.RUN:
                         if (code[pos][A3]) {

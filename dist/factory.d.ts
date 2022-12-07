@@ -12,7 +12,6 @@ export declare class Factory {
     assign(path: string, value: any): void;
     evaluate(expr: string): any;
     parse(text: string): any[];
-    build(stmts: any[]): any[];
     compile(code: any[]): () => any;
     print(value: any): string;
 }

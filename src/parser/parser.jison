@@ -247,6 +247,7 @@ stmt_expr
     ;
 
 //---------------------------------------------------------
+// https://mathjs.org/docs/expressions/syntax.html
 e
     : e OR e                {$$ = $1 + ' or ' + $3}
     | e XOR e               {$$ = $1 + ' xor ' + $3}

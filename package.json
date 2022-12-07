@@ -7,9 +7,6 @@
     "parser": "node ./src/parser/make.js && tsc",
     "test": "node ./test/index.js"
   },
-  "dependencies": {
-    "mathjs": "^11.4.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pjsr1980/mathjs-lang.git"
@@ -34,5 +31,8 @@
     "./dist/factory.js": "./dist/factory.js",
     ".": "./dist/factory.js"
   },
-  "module": "./dist/factory.js"
+  "module": "./dist/factory.js",
+  "dependencies": {
+    "mathjs": "^11.5.0"
+  }
 }
